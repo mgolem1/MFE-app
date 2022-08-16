@@ -1,48 +1,30 @@
 import React,{useState} from "react";
-//import { useSelector } from "react-redux";
-//import { deleteRacun, getRacunSelector,sortSilazno,sortUzlazno } from "./RacunSlice";
-//import { useAppDispatch } from "../store/store";
 import { Button, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow,Paper } from "@material-ui/core";
-
-import {useStore,StoreProvider} from "store/storeApp"
+import { Switch, Route, Routes,Link } from "react-router-dom";
+import {useStore} from "store/storeApp"
+import BillApp from "./BillApp";
 
 const BillList=()=>{
     //const dispatch=useAppDispatch();
     //const racun=useSelector(getRacunSelector);
-    const { racun } = useStore();
+    const { racun, deleteBill } = useStore();
     console.log(racun)
-    /*const [racun,setRacun]=useState([{
-        id:1,
-        brRacuna:'2',
-        RBR:12,
-        smjer:'ulazni',
-        datumRacuna:new Date(),
-        rokPlacanja:new Date(),
-        nazivPartner:'Niko',
-        adresaPartnera:'Šibenska 37',
-        OIBPartnera:'321543654',
-        iznosPrije:100,
-        porez:25,
-        iznosPoreza:25,
-        saPorezon:125
-    }])*/
 
-    /*const removeFromListHandler=(id:number)=>{
-        dispatch(deleteRacun(id));
+    const removeFromListHandler=(id)=>{
+        deleteBill(id);
     }
+    
     let total=0;
     racun.forEach(el=>{
         total+=+el.saPorezon;
     })
 
-    const sortSilazni=(n:string)=>{
-        dispatch(sortSilazno(n));
-    }
-    const sortUzlazn=(n:string)=>{
-        dispatch(sortUzlazno(n));
-    }*/
     return (
         <>
+            <Routes>
+                <Route path="/addRacun" component={BillApp}></Route>
+            </Routes>
+            <Link to="/addRacun"><Button>NOVI RAČUN</Button></Link>
             <TableContainer component={Paper} >
                 <Table stickyHeader={false} style={{ tableLayout: "auto" }}  >
                     <TableHead>
@@ -115,7 +97,7 @@ const BillList=()=>{
                                 {racun.saPorezon} 
                             </TableCell>
                             <TableCell scope="row">
-                                {/*<Button onClick={()=>removeFromListHandler(racun.id)}>Obriši</Button>*/}
+                                <Button onClick={()=>removeFromListHandler(racun.id)}>Obriši</Button>
                             </TableCell>
                             <TableCell scope="row" >
                                 <Button onClick={()=>redirectUpdate(racun.id.toString())}>Uredi</Button>

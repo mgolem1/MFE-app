@@ -13,7 +13,7 @@ const devConfig={
         new ModuleFederationPlugin({
             name: 'container',
             remotes:{
-                //bill: 'bill@http://localhost:8082/remoteEntry.js',
+                bill: 'bill@http://localhost:8083/remoteEntry.js',
                 store: 'store@http://localhost:8082/remoteEntry.js'
             },
             shared: packageJson.dependencies,

@@ -8,7 +8,7 @@ const packageJson = require('../package.json');
 const devConfig = {
   mode: 'development',
   devServer: {
-    port: 8082,
+    port: 8083,
     historyApiFallback: {
       index: 'index.html',
     },
@@ -19,6 +19,9 @@ const devConfig = {
       filename: 'remoteEntry.js',
       exposes: {
         './BillApp' : './src/bootstrap'
+      },
+      remotes:{
+        store: 'store@http://localhost:8082/remoteEntry.js'
       },
       shared: packageJson.dependencies
     }),

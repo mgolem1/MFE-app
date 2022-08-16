@@ -1,40 +1,27 @@
 import { Button } from "@material-ui/core";
-import '../style/submit.css'
 import React,{ useState} from "react"
-//import { useAppDispatch,useAppSelector } from "../store/store.hooks";
-//import {getRacunSelector,addRacun} from "./RacunSlice";
-import { useNavigate, useParams } from "react-router-dom";
-//import { updateRacun } from "./RacunSlice";
+import { Switch, Route, Router } from "react-router-dom";
 import moment from 'moment';
-import { useSelector } from "react-redux";
+import {useStore} from "store/storeApp"
 
 
+const AddRacun=({ history })=>{
 
-const AddRacun:React.FC=()=>{
-    const { Id } = useParams<{ Id: string }>();
-    const racun=useSelector((state) => {
-        if(Id)
-        return state.racun.find((racun) => racun.id === parseInt(Id));
-        else
-        return null;
-    })
-    //const dispatch=useAppDispatch();
-    const navigate=useNavigate()
-    //const sviRacuni=useSelector(getRacunSelector);
+    const { racun,addBill } = useStore();
 
-    const [id, setIdu] = useState<number>(racun?.id || 0);
-    const [RBR, setRBR] = useState<number>(racun?.RBR || 0);
-    const [brRacuna, setBrRacuna] = useState<string>(racun?.brRacuna || "");
-    const [smjer, setSmjer] = useState<string>(racun?.smjer || "izlazni");
-    const [datumRacuna, setDatumRacuna] = useState<Date>(racun?.datumRacuna || new Date());
-    const [rokPlacanja, setRokPlacanja] = useState<Date>(racun?.rokPlacanja || new Date());
-    const [nazivPartner, setNazivPartner] = useState<string>(racun?.nazivPartner || "");
-    const [adresaPartnera, setAdresaPartnera] = useState<string>(racun?.brRacuna || "");
-    const [OIBPartnera, setOIB] = useState<string>(racun?.OIBPartnera || "");
-    const [iznosPrije, setIznosPrije] = useState<number>(racun?.iznosPrije || 0);
-    const [porez, setPorez] = useState<number>(racun?.porez || 0);
-    const [iznosPoreza, setIznosPoreza] = useState<number>(racun?.iznosPoreza || 0);
-    const [saPorezon, setSaPorezom] = useState<number>(racun?.saPorezon || 0);
+    const [id, setIdu] = useState(0);
+    const [RBR, setRBR] = useState(0);
+    const [brRacuna, setBrRacuna] = useState("");
+    const [smjer, setSmjer] = useState("izlazni");
+    const [datumRacuna, setDatumRacuna] = useState(new Date());
+    const [rokPlacanja, setRokPlacanja] = useState(new Date());
+    const [nazivPartner, setNazivPartner] = useState("");
+    const [adresaPartnera, setAdresaPartnera] = useState("");
+    const [OIBPartnera, setOIB] = useState("");
+    const [iznosPrije, setIznosPrije] = useState(0);
+    const [porez, setPorez] = useState(0);
+    const [iznosPoreza, setIznosPoreza] = useState(0);
+    const [saPorezon, setSaPorezom] = useState(0);
 
     const [error,setError]=useState({idError:'',
     brRacunaError:'',
@@ -46,22 +33,21 @@ const AddRacun:React.FC=()=>{
     valid:true })
     
     
-    
-    const handleSubmit=(e:React.FormEvent)=>{
+    const handleSubmit=(e)=>{
         
         e.preventDefault();
         handleValidation()
         if(error.valid){
-            //dispatch(addRacun({id,brRacuna,RBR,smjer,datumRacuna,rokPlacanja,nazivPartner,adresaPartnera,OIBPartnera,iznosPrije,porez,iznosPoreza,saPorezon}))
-            navigate("/");
+            addBill({id,brRacuna,RBR,smjer,datumRacuna,rokPlacanja,nazivPartner,adresaPartnera,OIBPartnera,iznosPrije,porez,iznosPoreza,saPorezon})
+            console.log('tu')
         }
         
     }
-    const onChangeDate = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeDate = (e) => {
         const newDate = moment(new Date(e.target.value),'yyyy-mm-dd');
         setRokPlacanja(newDate.toDate());
     };
-    const onChangeDate2 = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeDate2 = (e) => {
         const newDate =moment(new Date(e.target.value));
         setDatumRacuna(newDate.toDate());
     };
@@ -70,8 +56,8 @@ const AddRacun:React.FC=()=>{
     const handleValidation=()=>{
          let errors = error
 
-         const existingID=sviRacuni.find(item=>item.id===id)
-         const existingBrRacuna=sviRacuni.find(item=>item.brRacuna===brRacuna)
+         const existingID=racun.find(item=>item.id===id)
+         const existingBrRacuna=racun.find(item=>item.brRacuna===brRacuna)
 
         if(existingID){
             errors.idError='ID već postoji!'
@@ -128,11 +114,11 @@ const AddRacun:React.FC=()=>{
 
     }
     
-    const onChageIznosPrije=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    const onChageIznosPrije=(e)=>{
         setIznosPrije(parseInt(e.target.value))
         setSaPorezom(parseInt(e.target.value)+iznosPoreza)
     }
-    const onChagePorez=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    const onChagePorez=(e)=>{
         setPorez(parseInt(e.currentTarget.value))
         setIznosPoreza(iznosPrije*((parseInt(e.currentTarget.value))/100))
         setSaPorezom(iznosPrije+(iznosPrije*((parseInt(e.currentTarget.value))/100)))

@@ -113,14 +113,19 @@ const store = configureStore({
     reducer: {
       racun: racunSlice.reducer,
     },
+    middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    })
   });
 
  function useStore() {
     const racun = useSelector((state) => state.racun);
     const dispatch = useDispatch();
     return {
-      racun
-      
+      racun,
+      addBill:(action)=>dispatch(addRacun(action)),
+      deleteBill:(id)=>dispatch(deleteRacun(id))  
     };
   }
   

@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import BillList from "./BillList";
+import App from "./App";
 import {useStore,StoreProvider} from "store/storeApp"
+import BillApp from './components/BillApp'
 
 ReactDOM.render(
-<StoreProvider>
-<BillList />
-</StoreProvider>,
+    <StoreProvider>
+    <App />
+    </StoreProvider>,
 document.querySelector("#root"));
