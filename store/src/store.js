@@ -1,7 +1,6 @@
 import React from "react";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { Provider, useSelector, useDispatch } from "react-redux";
-import {createStore} from "redux"
 
 
 const initialState=[{
