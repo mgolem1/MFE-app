@@ -1,7 +1,7 @@
 import React from "react";
-import { configureStore, createSlice,PayloadAction } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { Provider, useSelector, useDispatch } from "react-redux";
-
+import {createStore} from "redux"
 
 
 const initialState=[{
@@ -81,37 +81,20 @@ const initialState=[{
 }
 ]
 
-export const racunSlice=createSlice({
-    name:'racun',
-    initialState,
-    reducers:{
-        addRacun:(state,action)=>{
-            const existingID=state.find((item)=>item.id===action.payload.id);
-            const existingBrRac=state.find((item)=>item.brRacuna===action.payload.brRacuna)
-            if(existingID || existingBrRac){
-                console.log('error')
-                
-            }
-            else{
-                return [action.payload,...state]
-            };
-            
-        },
-        deleteRacun:(state,action)=>{
-            return state= state.filter(racun=>racun.id!==action.payload);
-        }
-
+export function racunReducer(state=initialState,action){
+    switch(action.type){
+        case "DELETE_BILL":
+            return state= state.filter(racun=>racun.id!==action.payload)
+        case "ADD_BILL":
+            return [action.payload,...state]
+        default:
+            return state;
     }
-})
-
-
-const {addRacun,deleteRacun}=racunSlice.actions;
-
-
+}
 
 const store = configureStore({
     reducer: {
-      racun: racunSlice.reducer,
+      racun: racunReducer,
     },
     middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
@@ -119,16 +102,21 @@ const store = configureStore({
     })
   });
 
- function useStore() {
-    const racun = useSelector((state) => state.racun);
-    const dispatch = useDispatch();
-    return {
-      racun,
-      addBill:(action)=>dispatch(addRacun(action)),
-      deleteBill:(id)=>dispatch(deleteRacun(id))  
-    };
+function useStore(){
+    const racun=useSelector((state)=>state.racun);
+    return{
+        racun,
+        addBill:(action)=>store.dispatch({
+            type:"ADD_BILL",
+            payload:action
+        }),
+        deleteBill:(id)=>store.dispatch({
+            type:"DELETE_BILL",
+            payload:id
+        })
+    }
   }
-  
+
  function StoreProvider({ children }) {
     return <Provider store={store}>{children}</Provider>;
   }

@@ -7,7 +7,9 @@ export default ({ history }) => {
     <div>
      
         <Router history={history}>
-            <Route exact path="/addRacun" component={AddRacun} />
+            <Switch>
+                <Route exact path="/addRacun" component={AddRacun} />
+            </Switch>
         </Router>
     </div>
   );

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Button, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow,Paper } from "@material-ui/core";
 import { Switch, Route, Routes,Link } from "react-router-dom";
 import {useStore} from "store/storeApp"
@@ -21,9 +21,6 @@ const BillList=()=>{
 
     return (
         <>
-            <Routes>
-                <Route path="/addRacun" component={BillApp}></Route>
-            </Routes>
             <Link to="/addRacun"><Button>NOVI RAČUN</Button></Link>
             <TableContainer component={Paper} >
                 <Table stickyHeader={false} style={{ tableLayout: "auto" }}  >
@@ -75,32 +72,32 @@ const BillList=()=>{
                     <TableBody>
                     {racun.map((racun)=>(
                         <TableRow key={racun.id}>
-                            <TableCell scope="row" align="center" onClick={()=>redirectDetails(racun.id.toString())}>
+                            <TableCell scope="row" align="center">
                                 {racun.id}
                             </TableCell>
-                            <TableCell scope="row" align="center" onClick={()=>redirectDetails(racun.id.toString())}>
+                            <TableCell scope="row" align="center">
                                 {racun.brRacuna}
                             </TableCell>
-                            <TableCell scope="row" align="center" onClick={()=>redirectDetails(racun.id.toString())}>
+                            <TableCell scope="row" align="center">
                                 {racun.RBR}
                             </TableCell>
-                            <TableCell scope="row" align="center" onClick={()=>redirectDetails(racun.id.toString())}>
+                            <TableCell scope="row" align="center">
                                 {racun.smjer} račun
                             </TableCell>
-                            <TableCell scope="row"  align="center"onClick={()=>redirectDetails(racun.id.toString())}>
+                            <TableCell scope="row"  align="center">
                                 {racun.datumRacuna.toDateString()}
                             </TableCell>
-                            <TableCell scope="row"  align="center"onClick={()=>redirectDetails(racun.id.toString())}>
+                            <TableCell scope="row"  align="center">
                                 {racun.nazivPartner}
                             </TableCell>
-                            <TableCell scope="row"  align="center"onClick={()=>redirectDetails(racun.id.toString())}>
+                            <TableCell scope="row"  align="center">
                                 {racun.saPorezon} 
                             </TableCell>
                             <TableCell scope="row">
                                 <Button onClick={()=>removeFromListHandler(racun.id)}>Obriši</Button>
                             </TableCell>
                             <TableCell scope="row" >
-                                <Button onClick={()=>redirectUpdate(racun.id.toString())}>Uredi</Button>
+                                <Button>Uredi</Button>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -115,7 +112,7 @@ const BillList=()=>{
                         <TableCell></TableCell>
                         <TableCell></TableCell>
                         <TableCell>Ukupan iznos: </TableCell>
-                        {/*<TableCell>{total}</TableCell>*/}
+                        <TableCell>{total}</TableCell>
                     </TableRow>
                 </TableFooter>
                 </Table>

@@ -2,6 +2,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  devtool: 'eval-source-map', 
   module: {
     rules: [
       /**
@@ -10,6 +11,7 @@ module.exports = {
       {
         test: /\.m?js$/, // every file with mjs or js is going to be proccesed by babel
         exclude: /node_modules/,
+        enforce: 'pre',
         use: {
           loader: "babel-loader",
           options: {
