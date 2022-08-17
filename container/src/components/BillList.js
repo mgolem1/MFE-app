@@ -2,7 +2,6 @@ import React,{useState,useEffect} from "react";
 import { Button, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow,Paper } from "@material-ui/core";
 import { Switch, Route, Routes,Link } from "react-router-dom";
 import {useStore} from "store/storeApp"
-import BillApp from "./BillApp";
 
 const BillList=()=>{
     const { racun, deleteBill } = useStore();
