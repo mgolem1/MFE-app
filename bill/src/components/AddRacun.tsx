@@ -1,11 +1,10 @@
 import { Button } from "@material-ui/core";
 import React,{ useState} from "react"
-import { Switch, Route, Router } from "react-router-dom";
 import moment from 'moment';
 import {useStore} from "store/storeApp"
 
 
-const AddRacun=({ history })=>{
+const AddRacun:React.FC=()=>{
 
     const { racun,addBill } = useStore();
 
@@ -33,7 +32,7 @@ const AddRacun=({ history })=>{
     valid:true })
     
     
-    const handleSubmit=(e)=>{
+    const handleSubmit=(e:React.FormEvent)=>{
         
         e.preventDefault();
         handleValidation()
@@ -43,11 +42,11 @@ const AddRacun=({ history })=>{
         }
         
     }
-    const onChangeDate = (e) => {
+    const onChangeDate = (e:React.ChangeEvent<HTMLInputElement>) => {
         const newDate = moment(new Date(e.target.value),'yyyy-mm-dd');
         setRokPlacanja(newDate.toDate());
     };
-    const onChangeDate2 = (e) => {
+    const onChangeDate2 = (e:React.ChangeEvent<HTMLInputElement>) => {
         const newDate =moment(new Date(e.target.value));
         setDatumRacuna(newDate.toDate());
     };
@@ -56,14 +55,7 @@ const AddRacun=({ history })=>{
     const handleValidation=()=>{
          let errors = error
 
-         const existingID=racun.find(item=>item.id===id)
-         const existingBrRacuna=racun.find(item=>item.brRacuna===brRacuna)
-
-        if(existingID){
-            errors.idError='ID već postoji!'
-            errors.valid=false
-        }
-        else if(id<=0){
+        if(id<=0){
             errors.idError='Neispravan ID'
             errors.valid=false
         }else if(id>0){
@@ -71,11 +63,7 @@ const AddRacun=({ history })=>{
             errors.valid=true
 
         }
-        if(existingBrRacuna){
-            errors.brRacunaError='Broj računa već postoji!'
-            errors.valid=false
-        }
-        else if(brRacuna===''){
+        if(brRacuna===''){
             errors.brRacunaError='Neispravan broj računa'
             errors.valid=false
         }
@@ -114,11 +102,11 @@ const AddRacun=({ history })=>{
 
     }
     
-    const onChageIznosPrije=(e)=>{
+    const onChageIznosPrije=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setIznosPrije(parseInt(e.target.value))
         setSaPorezom(parseInt(e.target.value)+iznosPoreza)
     }
-    const onChagePorez=(e)=>{
+    const onChagePorez=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setPorez(parseInt(e.currentTarget.value))
         setIznosPoreza(iznosPrije*((parseInt(e.currentTarget.value))/100))
         setSaPorezom(iznosPrije+(iznosPrije*((parseInt(e.currentTarget.value))/100)))

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 
 
-const App = () => (
+const App:React.FC = () => (
   <div>
     <div>Name: store</div>
     <div>Framework: react</div>

@@ -4,27 +4,27 @@ import {StoreProvider} from "store/storeApp"
 import App from "./App";
 import { createMemoryHistory, createBrowserHistory } from "history";
 
-const mount= (el, { onNavigate, defaultHistory }) => {
-    const history = defaultHistory ?? createMemoryHistory();
+const mount= (el:any) => {
+    /*const history = defaultHistory ?? createMemoryHistory();
 
     if (onNavigate) {
       history.listen(onNavigate);
-    }
+    }*/
   
     ReactDOM.render(
         <StoreProvider>
-            <App history={history}/>
+            <App/>
         </StoreProvider>, el);
 
-    return {
-        onParentNavigate({ pathname: nextPathname }) {
-        const { pathname } = history.location;
+    // return {
+    //     onParentNavigate({ pathname: nextPathname }) {
+    //     const { pathname } = history.location;
 
-        if (pathname !== nextPathname) {
-            history.push(nextPathname);
-        }
-        },
-    };
+    //     if (pathname !== nextPathname) {
+    //         history.push(nextPathname);
+    //     }
+    //     },
+    // };
 }
 
 if (process.env.NODE_ENV === "development") {
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "development") {
   
     if (devRoot) {
       // if we are running our marketing application in isolation, in development
-      mount(devRoot, { defaultHistory: createBrowserHistory });
+      mount(devRoot);
     }
   }
 

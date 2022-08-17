@@ -2,7 +2,10 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  devtool: 'eval-source-map', 
+  resolve: {
+    extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+  },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       /**
@@ -15,7 +18,7 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-react", "@babel/preset-env"],
+            presets: ["@babel/preset-react", "@babel/preset-typescript"],
             /**
              * @babel/preset-react -> process JSX tags
              * @babe/preset-env -> transform code to ES 5
@@ -25,6 +28,11 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.tsx?$/, // every file with mjs or js is going to be proccesed by babel
+        exclude: /node_modules/,
+        loader: "ts-loader",
+      },
     ],
   },
   plugins: [
@@ -33,3 +41,5 @@ module.exports = {
     }),
   ],
 };
+
+

@@ -1,12 +1,12 @@
 import { mount } from "bill/BillApp";
 import React, { useRef, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 export default () => {
   const ref = useRef(null);
-  const history = useHistory();
+  //const history = useHistory();
 
   useEffect(() => {
-    const { onParentNavigate } = mount(ref.current, {
+    /*const { onParentNavigate } = mount(ref.current, {
       onNavigate: ({ pathname: nextPathname }) => {
         const { pathname } = history.location;
         if (pathname !== nextPathname) {
@@ -15,7 +15,8 @@ export default () => {
       },
     });
 
-    history.listen(onParentNavigate);
+    history.listen(onParentNavigate);*/
+    mount(ref.current);
   }, []);
 
   return(

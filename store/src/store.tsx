@@ -1,9 +1,26 @@
 import React from "react";
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { configureStore, PayloadAction } from "@reduxjs/toolkit";
+import { Provider, useSelector } from "react-redux";
+import { AppAction } from "./types";
+import { TypedUseSelectorHook } from "react-redux";
 
+export interface Racun{
+    id:number,
+    brRacuna:string,
+    RBR:number,
+    smjer:string,
+    datumRacuna:Date,
+    rokPlacanja:Date,
+    nazivPartner:string,
+    adresaPartnera:string,
+    OIBPartnera:string,
+    iznosPrije:number,
+    porez:number,
+    iznosPoreza:number,
+    saPorezon:number,  
+}
 
-const initialState=[{
+const initialState:Racun[]=[{
     id:1,
     brRacuna:'2',
     RBR:12,
@@ -80,7 +97,7 @@ const initialState=[{
 }
 ]
 
-export function racunReducer(state=initialState,action){
+export function racunReducer(state=initialState,action:AppAction){
     switch(action.type){
         case "DELETE_BILL":
             return state= state.filter(racun=>racun.id!==action.payload)
@@ -90,34 +107,33 @@ export function racunReducer(state=initialState,action){
             return state;
     }
 }
-
-const store = configureStore({
-    reducer: {
-      racun: racunReducer,
-    },
+const store=configureStore({
+    reducer:racunReducer,
     middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
     })
-  });
-
+})
+export type RootState=ReturnType<typeof store.getState>
+export const useAppSelector:TypedUseSelectorHook<RootState>=useSelector;
 function useStore(){
-    const racun=useSelector((state)=>state.racun);
+    const racun=useAppSelector((state:RootState)=>state);
     return{
         racun,
-        addBill:(action)=>store.dispatch({
+        addBill:(action:Racun)=>store.dispatch({
             type:"ADD_BILL",
             payload:action
         }),
-        deleteBill:(id)=>store.dispatch({
+        deleteBill:(id:number)=>store.dispatch({
             type:"DELETE_BILL",
             payload:id
         })
     }
   }
 
- function StoreProvider({ children }) {
+ function StoreProvider({ children }:any) {
     return <Provider store={store}>{children}</Provider>;
   }
 
-  export {useStore,StoreProvider}
+
+export {useStore,StoreProvider}

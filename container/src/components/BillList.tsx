@@ -1,24 +1,34 @@
 import React,{useState,useEffect} from "react";
 import { Button, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow,Paper } from "@material-ui/core";
-import { Switch, Route, Routes,Link } from "react-router-dom";
+import {  Route, Routes,Link } from "react-router-dom";
 import {useStore} from "store/storeApp"
-
-const BillList=()=>{
+export interface Racun{
+    id:number,
+    brRacuna:string,
+    RBR:number,
+    smjer:string,
+    datumRacuna:Date,
+    rokPlacanja:Date,
+    nazivPartner:string,
+    adresaPartnera:string,
+    OIBPartnera:string,
+    iznosPrije:number,
+    porez:number,
+    iznosPoreza:number,
+    saPorezon:number,  
+}
+const BillList:React.FC=()=>{
     const { racun, deleteBill } = useStore();
-    console.log(racun)
+    console.log(typeof(racun))
 
-    const removeFromListHandler=(id)=>{
+    const removeFromListHandler=(id:number)=>{
         deleteBill(id);
     }
-    
     let total=0;
-    racun.forEach(el=>{
-        total+=+el.saPorezon;
-    })
-
+    
     return (
         <>
-            <Link to="/addRacun"><Button>NOVI RAČUN</Button></Link>
+            
             <TableContainer component={Paper} >
                 <Table stickyHeader={false} style={{ tableLayout: "auto" }}  >
                     <TableHead>
@@ -67,7 +77,7 @@ const BillList=()=>{
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {racun.map((racun)=>(
+                    {racun.map((racun:any)=>(
                         <TableRow key={racun.id}>
                             <TableCell scope="row" align="center">
                                 {racun.id}
