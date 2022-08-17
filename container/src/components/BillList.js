@@ -5,8 +5,6 @@ import {useStore} from "store/storeApp"
 import BillApp from "./BillApp";
 
 const BillList=()=>{
-    //const dispatch=useAppDispatch();
-    //const racun=useSelector(getRacunSelector);
     const { racun, deleteBill } = useStore();
     console.log(racun)
 
