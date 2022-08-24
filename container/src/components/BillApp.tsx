@@ -1,6 +1,5 @@
 import { mount } from "bill/BillApp";
 import React, { useRef, useEffect } from "react";
-import MESSAGES from "../locale";
 //import { useHistory } from "react-router-dom";
 export default () => {
   const ref = useRef(null);
