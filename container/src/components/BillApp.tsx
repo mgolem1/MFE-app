@@ -1,5 +1,6 @@
 import { mount } from "bill/BillApp";
 import React, { useRef, useEffect } from "react";
+import MESSAGES from "../locale";
 //import { useHistory } from "react-router-dom";
 export default () => {
   const ref = useRef(null);
@@ -15,11 +16,13 @@ export default () => {
       },
     });
 
+    
     history.listen(onParentNavigate);*/
-    mount(ref.current);
+    let modifiedMessages = {
+      hr: { "COMMON.ACTION_ADD_NEW": "IZMIJENJENI DODAJ NOVI" },
+    };
+    mount(ref.current, modifiedMessages);
   }, []);
 
-  return(
-    <div ref={ref} />
-  );
+  return <div ref={ref} />;
 };

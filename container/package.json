@@ -12,7 +12,9 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^8.0.2",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0", 
+    "@sedamit/bss-web-lib": "^1.0.0-snapshot.36",
+    "@sedamit/sedam-webui-lib": "1.0.0-snapshot.18"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.18.6",
